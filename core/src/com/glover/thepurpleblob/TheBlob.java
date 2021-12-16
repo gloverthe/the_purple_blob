@@ -29,10 +29,11 @@ public class TheBlob {
 //    public static Texture blobLeft_4;
 
     public static Sound wingFlap;
-    public static Rectangle blob;
-    public static Animation<TextureRegion> blobSpriteWait;
-    public static Animation<TextureRegion> blobSpriteGoRight;
-    public static Animation<TextureRegion> blobSpriteGoLeft;
+    private static Rectangle blob;
+//    public static Animation<TextureRegion> blobSpriteWait;
+//    public static Animation<TextureRegion> blobSpriteGoRight;
+//    public static Animation<TextureRegion> blobSpriteGoLeft;
+    public static Animation<TextureRegion> blobSprite;
     public static float blobStateTime = 0;
 
 //    public static Vector2 butterflyPosition = new Vector2();
@@ -48,12 +49,12 @@ public class TheBlob {
         blobWait_4 = new Texture(Gdx.files.internal(blobPath + "blobtallleftup.png"));
 
         blobWait_1.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        blobSpriteWait = new Animation<TextureRegion>(0.10f,
-                new TextureRegion(blobWait_1),
-                new TextureRegion(blobWait_2),
-                new TextureRegion(blobWait_3),
-                new TextureRegion(blobWait_4));
-        blobSpriteWait.setPlayMode(Animation.PlayMode.LOOP);
+//        blobSpriteWait = new Animation<TextureRegion>(0.10f,
+//                new TextureRegion(blobWait_1),
+//                new TextureRegion(blobWait_2),
+//                new TextureRegion(blobWait_3),
+//                new TextureRegion(blobWait_4));
+//        blobSpriteWait.setPlayMode(Animation.PlayMode.LOOP);
 
 
         blobRight_1 = new Texture(Gdx.files.internal(blobPath + "blob_tall_goright_2.png"));
@@ -62,21 +63,21 @@ public class TheBlob {
         blobRight_4 = new Texture(Gdx.files.internal(blobPath + "blob_small_goright_1.png"));
 
         blobRight_1.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        blobSpriteGoRight = new Animation<TextureRegion>(0.10f,
-                new TextureRegion(blobRight_1),
-                new TextureRegion(blobRight_2),
-                new TextureRegion(blobRight_3),
-                new TextureRegion(blobRight_4));
-        blobSpriteGoRight.setPlayMode(Animation.PlayMode.LOOP);
+//        blobSpriteGoRight = new Animation<TextureRegion>(0.10f,
+//                new TextureRegion(blobRight_1),
+//                new TextureRegion(blobRight_2),
+//                new TextureRegion(blobRight_3),
+//                new TextureRegion(blobRight_4));
+//        blobSpriteGoRight.setPlayMode(Animation.PlayMode.LOOP);
 
         blobLeft_1 = new Texture(Gdx.files.internal(blobPath + "blobtallturnleft.png"));
         blobLeft_2 = new Texture(Gdx.files.internal(blobPath + "blob_small_turn_left.png"));
 
         blobLeft_1.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        blobSpriteGoLeft = new Animation<TextureRegion>(0.20f,
-                new TextureRegion(blobLeft_1),
-                new TextureRegion(blobLeft_2));
-        blobSpriteGoLeft.setPlayMode(Animation.PlayMode.LOOP);
+//        blobSpriteGoLeft = new Animation<TextureRegion>(0.20f,
+//                new TextureRegion(blobLeft_1),
+//                new TextureRegion(blobLeft_2));
+//        blobSpriteGoLeft.setPlayMode(Animation.PlayMode.LOOP);
 
 
 
@@ -90,11 +91,56 @@ public class TheBlob {
         blob.height = 250;
         blob.width = 250;
 
+
+
+
         //new butterfly flapping stuff
 //        butterflyPosition.set(20, (Constants.SCREEN_HEIGHT / 2) - (butterfly.height / 2));
 //        butterflyVelocity.set(0, 0);
 //        gravity.set(0, GRAVITY);
     }
 
+    public static void setBlobx(float blobx){
+        if(blobx < 0) blob.x = 0;
+        else if(blobx > Constants.SCREEN_WIDTH - blob.width) blob.x = Constants.SCREEN_WIDTH - blob.width;
+        else blob.x += blobx;
+    }
+
+    public static float getBlobx() {return blob.x;}
+
+    public static void setBloby(float bloby){
+        if(bloby < 0) blob.y = 0;
+        else if(bloby > Constants.SCREEN_HEIGHT - blob.height) blob.y = Constants.SCREEN_HEIGHT - blob.height;
+        else blob.y += bloby;
+    }
+
+    public static float getBloby() {return blob.y;}
+
+    public static Animation<TextureRegion> returnBlob(Character blobState){
+//        Animation<TextureRegion> blobSprite = null;
+        if(blobState == 'r') {
+            blobSprite= new Animation<TextureRegion>(0.10f,
+                    new TextureRegion(blobRight_1),
+                    new TextureRegion(blobRight_2),
+                    new TextureRegion(blobRight_3),
+                    new TextureRegion(blobRight_4));
+            blobSprite.setPlayMode(Animation.PlayMode.LOOP);
+        }
+        if(blobState == 'l') {
+            blobSprite = new Animation<TextureRegion>(0.20f,
+                    new TextureRegion(blobLeft_1),
+                    new TextureRegion(blobLeft_2));
+            blobSprite.setPlayMode(Animation.PlayMode.LOOP);
+        }
+        if(blobState == 'n') {
+            blobSprite = new Animation<TextureRegion>(0.10f,
+                    new TextureRegion(blobWait_1),
+                    new TextureRegion(blobWait_2),
+                    new TextureRegion(blobWait_3),
+                    new TextureRegion(blobWait_4));
+            blobSprite.setPlayMode(Animation.PlayMode.LOOP);
+        }
+        return blobSprite;
+    }
 
 }

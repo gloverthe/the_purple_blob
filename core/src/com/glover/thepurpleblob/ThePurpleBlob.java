@@ -29,7 +29,7 @@ public class ThePurpleBlob extends ApplicationAdapter {
 		float deltaTime = Gdx.graphics.getDeltaTime();
 		TheBlob.blobStateTime += deltaTime;
 
-		if(blobWait == 4){
+		if(blobWait == 6){
 			blobDirection = 'n';
 			blobWait = 0;
 		}
@@ -37,36 +37,39 @@ public class ThePurpleBlob extends ApplicationAdapter {
 
 		ScreenUtils.clear(1, 0, 0, 1);
 		batch.begin();
-		if(blobDirection=='n') {
-			batch.draw(TheBlob.blobSpriteWait.getKeyFrame(TheBlob.blobStateTime), TheBlob.blob.x, TheBlob.blob.y);
-		}
-		if(blobDirection=='r') {
-			batch.draw(TheBlob.blobSpriteGoRight.getKeyFrame(TheBlob.blobStateTime), TheBlob.blob.x, TheBlob.blob.y);
-			blobWait += 1;
-		}
-		if(blobDirection=='l') {
-			batch.draw(TheBlob.blobSpriteGoLeft.getKeyFrame(TheBlob.blobStateTime), TheBlob.blob.x, TheBlob.blob.y);
-			blobWait += 1;
-		}
+		batch.draw(TheBlob.returnBlob(blobDirection).getKeyFrame(TheBlob.blobStateTime), TheBlob.getBlobx(), TheBlob.getBloby());
+		blobWait += 1;
+//		if(blobDirection=='n') {
+//			batch.draw(TheBlob.blobSpriteWait.getKeyFrame(TheBlob.blobStateTime), TheBlob.blob.x, TheBlob.blob.y);
+//		}
+//		if(blobDirection=='r') {
+//			batch.draw(TheBlob.blobSpriteGoRight.getKeyFrame(TheBlob.blobStateTime), TheBlob.blob.x, TheBlob.blob.y);
+//			blobWait += 1;
+//		}
+//		if(blobDirection=='l') {
+//			batch.draw(TheBlob.blobSpriteGoLeft.getKeyFrame(TheBlob.blobStateTime), TheBlob.blob.x, TheBlob.blob.y);
+//			blobWait += 1;
+//		}
+		//toDo fix calcuations for blob postions now getters and setters used
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-			TheBlob.blob.x -= 200 * Gdx.graphics.getDeltaTime();
+			TheBlob.setBlobx(-200 * Gdx.graphics.getDeltaTime())  ;
 			blobDirection = 'l' ;
 			blobWait = 0;
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-			TheBlob.blob.x += 200 * Gdx.graphics.getDeltaTime();
+			TheBlob.setBlobx(200 * Gdx.graphics.getDeltaTime())  ;
 			blobDirection = 'r' ;
 			blobWait = 0;
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-			TheBlob.blob.y += TheBlob.BLOB_JUMP * Gdx.graphics.getDeltaTime();
+			TheBlob.setBloby(TheBlob.BLOB_JUMP * Gdx.graphics.getDeltaTime());
 //			blobDirection = 'r' ;
 //			blobWait = 0;
 		}
 		//toDo add in blob jumping using logic from butterfly - touch screen
 
-		TheBlob.blob.y += -200 * Gdx.graphics.getDeltaTime();
-		if(TheBlob.blob.y < 0) TheBlob.blob.y = 0;
+		TheBlob.setBloby(-200 * Gdx.graphics.getDeltaTime());
+//		if(TheBlob.blob.y < 0) TheBlob.blob.y = 0;
 		batch.end();
 	}
 	
